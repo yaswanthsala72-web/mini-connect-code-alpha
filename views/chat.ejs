@@ -1,0 +1,76 @@
+<%- include('partials/header') %>
+
+<div class="app-container chat-page-container">
+  <%- include('partials/sidebar') %>
+
+  <main class="chat-layout glass-panel">
+    <aside class="chat-sidebar">
+      <div class="chat-sidebar-header">
+        <h2>Messages <% if (unreadTotal > 0) { %><span class="menu-badge"><%= unreadTotal %></span><% } %></h2>
+        <span id="online-count" class="online-badge">0 online</span>
+      </div>
+      <div class="chat-conversation-list">
+        <% if (conversations.length === 0) { %>
+          <p class="chat-empty" style="padding:20px;color:var(--text-muted);font-size:0.85rem;">No conversations yet. Visit a profile and click <b>Message</b>!</p>
+        <% } %>
+        <% conversations.forEach(conv => { %>
+          <% if (conv.otherUser) { %>
+            <a href="/chat?user=<%= conv.otherUser.username %>" class="chat-conv-item <%= activeUser && activeUser.username === conv.otherUser.username ? 'active' : '' %>">
+              <img src="<%= conv.otherUser.profilePicture %>" alt="<%= conv.otherUser.username %>">
+              <div class="chat-conv-meta">
+                <h5><%= conv.otherUser.username %></h5>
+                <p><%= conv.lastMessage?.text || 'Start a conversation' %></p>
+                <small><%= conv.lastMessage?.timestamp ? new Date(conv.lastMessage.timestamp).toLocaleString() : '' %></small>
+              </div>
+            </a>
+          <% } %>
+        <% }) %>
+      </div>
+    </aside>
+
+    <section class="chat-main" id="chat-main"
+      data-user-id="<%= activeUser ? activeUser._id : '' %>"
+      data-conversation-id="<%= activeConversation ? activeConversation._id : '' %>"
+      data-current-user-id="<%= currentUser.id %>">
+
+      <% if (!activeUser) { %>
+        <div class="chat-placeholder">
+          <h3>Select a conversation</h3>
+          <p>Visit any user profile and click <b>Message</b> to start chatting.</p>
+        </div>
+      <% } else { %>
+        <div class="chat-header">
+          <img src="<%= activeUser.profilePicture %>" alt="<%= activeUser.username %>">
+          <div>
+            <h4><%= activeUser.username %></h4>
+            <span id="chat-user-status" class="chat-status">Checking...</span>
+          </div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <% messages.forEach(msg => { %>
+            <% const isSent = (msg.sender?._id || msg.sender).toString() === currentUser.id; %>
+            <div class="chat-bubble <%= isSent ? 'sent' : 'received' %>">
+              <% if (msg.image) { %><img src="<%= msg.image %>" class="chat-image" alt="shared"><% } %>
+              <% if (msg.text) { %><p><%= msg.text %></p><% } %>
+              <span class="chat-time">
+                <%= new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %>
+                <% if (isSent) { %> · <%= msg.seen ? '✓✓ Seen' : msg.delivered ? '✓✓ Delivered' : '✓ Sent' %><% } %>
+              </span>
+            </div>
+          <% }) %>
+        </div>
+        <div id="typing-indicator" class="typing-indicator" style="display:none;"></div>
+        <form id="chat-form" class="chat-input-bar">
+          <button type="button" id="chat-image-btn" class="action-btn" title="Send image">📷</button>
+          <input type="file" id="chat-image-input" accept="image/*" style="display:none;">
+          <input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off">
+          <button type="submit" class="btn-primary">Send</button>
+        </form>
+      <% } %>
+    </section>
+  </main>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/chat.js"></script>
+<%- include('partials/footer') %>

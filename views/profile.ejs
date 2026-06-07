@@ -1,0 +1,179 @@
+<%- include('partials/header') %>
+
+<div class="profile-container">
+
+  <!-- Back to Feed link -->
+  <div style="display: flex; align-items: center; justify-content: space-between; padding: 0 10px;">
+    <a href="/" class="action-btn" style="text-decoration: none; padding: 8px 15px; border-radius: 10px; display: inline-flex; align-items: center; gap: 8px;">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18" style="color: var(--neon-cyan);">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      <span>Back to Feed</span>
+    </a>
+
+    <div style="display: flex; gap: 10px;">
+      <% if (userProfile.username !== currentUser.username) { %>
+        <a href="/chat?user=<%= userProfile.username %>" class="action-btn" style="padding: 8px 16px; text-decoration: none;">Message</a>
+        <button id="follow-btn" class="btn-primary <%= typeof isFollowing !== 'undefined' && isFollowing ? 'following-btn' : '' %>"
+          data-user-id="<%= userProfile._id %>"
+          data-following="<%= typeof isFollowing !== 'undefined' && isFollowing ? 'true' : 'false' %>"
+          style="padding: 8px 18px; font-size: 0.85rem;">
+          <%= typeof isFollowing !== 'undefined' && isFollowing ? 'Following' : 'Follow' %>
+        </button>
+      <% } else { %>
+        <button id="edit-profile-btn" class="btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">
+          Edit Bio / Avatar
+        </button>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Large Glassmorphic Profile Details Panel -->
+  <section class="profile-card-details glass-panel glow-purple">
+    
+    <div class="profile-avatar-large">
+      <img src="<%= userProfile.profilePicture %>" alt="<%= userProfile.username %>">
+    </div>
+
+    <div class="profile-info-body">
+      
+      <div class="profile-info-header">
+        <h2><%= userProfile.username %></h2>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">Creator ID: <%= userProfile._id.toString().slice(-8) %></span>
+      </div>
+
+      <!-- Real Dynamic Stats -->
+      <div class="profile-stats-row">
+        
+        <div class="stat-item">
+          <span class="stat-num"><%= posts.length %></span>
+          <span class="stat-label">posts</span>
+        </div>
+
+        <% 
+          let totalLikes = 0;
+          posts.forEach(p => totalLikes += p.likes.length);
+        %>
+        <div class="stat-item">
+          <span class="stat-num"><%= totalLikes %></span>
+          <span class="stat-label">total likes</span>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-num" id="followers-count"><%= typeof followersCount !== 'undefined' ? followersCount : 0 %></span>
+          <span class="stat-label">followers</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" id="following-count"><%= typeof followingCount !== 'undefined' ? followingCount : 0 %></span>
+          <span class="stat-label">following</span>
+        </div>
+      </div>
+
+      <div class="profile-bio">
+        <p style="font-weight: 700; color: var(--text-primary); margin-bottom: 5px;">Biography</p>
+        <p style="white-space: pre-wrap;"><%= userProfile.bio %></p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Grid Header separation -->
+  <h3 style="font-weight: 800; font-size: 1.2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px; margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="22" height="22" style="color: var(--neon-cyan);">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+    </svg>
+    <span>Shared Creations</span>
+  </h3>
+
+  <!-- User posts lists (Grids style like Instagram) -->
+  <% if (posts.length === 0) { %>
+    <div class="glass-panel" style="padding: 60px; text-align: center;">
+      <h4 style="font-weight: 700; margin-bottom: 8px;">No creations shared yet!</h4>
+      <p style="color: var(--text-secondary); font-size: 0.85rem;">This author's gallery is completely vacant.</p>
+    </div>
+  <% } else { %>
+    <div class="profile-posts-grid">
+      <% posts.forEach(post => { %>
+        
+        <!-- Post grid card -->
+        <div class="grid-post-card" onclick="window.location.href='/#post-<%= post._id %>'">
+          <!-- fallback to a styled vector if post has no image -->
+          <% if (post.image) { %>
+            <img src="<%= post.image %>" alt="Post art">
+          <% } else { %>
+            <div style="width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(135deg, rgba(189, 0, 255, 0.05), rgba(0, 240, 255, 0.05)); padding: 20px; text-align: center;">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="36" height="36" style="color: var(--neon-purple); filter: drop-shadow(0 0 4px var(--neon-purple)); margin-bottom: 10px;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+              </svg>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.3;"><%= post.content.length > 60 ? post.content.slice(0, 60) + '...' : post.content %></p>
+            </div>
+          <% } %>
+
+          <!-- Instagram-style overlay showing stats on hover -->
+          <div class="grid-post-overlay">
+            
+            <div class="grid-stat">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+              <span><%= post.likes.length %></span>
+            </div>
+
+            <div class="grid-stat">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+              <span><%= post.comments ? post.comments.length : 0 %></span>
+            </div>
+
+          </div>
+        </div>
+
+      <% }) %>
+    </div>
+  <% } %>
+
+</div>
+
+<!-- Profile editor drawer overlay -->
+<% if (userProfile.username === currentUser.username) { %>
+  <div id="edit-profile-modal" class="modal-overlay">
+    <div class="modal-card glass-panel glow-cyan">
+      
+      <div class="draggable-header" style="cursor: default; padding: 0 0 10px 0; border: none; background: transparent;">
+        <h3 style="font-weight: 800;">Modify My Profile</h3>
+        <button id="close-edit-modal" class="draggable-close-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <form action="/users/profile/update" method="POST" enctype="multipart/form-data" class="auth-form">
+        
+        <div class="form-group" style="align-items: center; margin-bottom: 10px;">
+          <div class="profile-avatar-large" style="width: 100px; height: 100px; margin-bottom: 10px;">
+            <img src="<%= userProfile.profilePicture %>" alt="preview">
+          </div>
+          
+          <label class="btn-primary" style="padding: 6px 16px; font-size: 0.75rem; border-radius: 8px;">
+            <span>Upload New Avatar</span>
+            <input type="file" name="profilePicture" class="file-input" onchange="this.parentElement.previousElementSibling.firstElementChild.src = URL.createObjectURL(this.files[0])">
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="edit-bio">BIOGRAPHY</label>
+          <textarea id="edit-bio" name="bio" class="form-control" placeholder="Update your cosmic status..." style="min-height: 100px; resize: none;"><%= userProfile.bio %></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 12px; margin-top: 10px;">Save Profile Info</button>
+
+      </form>
+
+    </div>
+  </div>
+<% } %>
+
+<%- include('partials/footer') %>

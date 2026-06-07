@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+<div class="app-container">
+  <%- include('partials/sidebar') %>
+  <main class="main-feed">
+    <div class="glass-panel search-widget" style="padding: 20px; margin-bottom: 24px;">
+      <form action="/search" method="GET">
+        <div class="search-input-wrapper">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input type="text" name="q" class="search-field global-search-input" placeholder="Search users, posts, #hashtags..." value="<%= query %>" autocomplete="off">
+        </div>
+      </form>
+      <div id="global-search-suggestions" class="search-results-panel glass-panel glow-cyan"></div>
+    </div>
+
+    <% if (query) { %>
+      <h3 class="search-section-title">Users</h3>
+      <% if (users.length === 0) { %><p class="search-empty">No users found.</p><% } %>
+      <% users.forEach(u => { %>
+        <a href="/users/<%= u.username %>" class="search-user-item glass-panel" style="margin-bottom: 10px;">
+          <img class="search-user-avatar" src="<%= u.profilePicture %>" alt="">
+          <div class="search-user-meta"><h5><%= u.username %></h5><p><%= u.bio %></p></div>
+        </a>
+      <% }) %>
+
+      <h3 class="search-section-title">Posts</h3>
+      <% if (posts.length === 0) { %><p class="search-empty">No posts found.</p><% } %>
+      <% posts.forEach(post => { %>
+        <div class="glass-panel" style="padding: 16px; margin-bottom: 12px;">
+          <a href="/users/<%= post.author.username %>" style="font-weight: 600; color: var(--neon-cyan); text-decoration: none;">@<%= post.author.username %></a>
+          <p style="margin-top: 8px;"><%= post.content %></p>
+        </div>
+      <% }) %>
+
+      <% if (hashtags && hashtags.length > 0) { %>
+        <h3 class="search-section-title">Hashtags</h3>
+        <div class="hashtag-chips">
+          <% hashtags.forEach(h => { %>
+            <a href="/search/hashtag/<%= h.tag.replace('#','') %>" class="hashtag-chip"><%= h.tag %> (<%= h.count %>)</a>
+          <% }) %>
+        </div>
+      <% } %>
+    <% } %>
+  </main>
+  <%- include('partials/right-sidebar') %>
+</div>
+<%- include('partials/footer') %>

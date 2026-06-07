@@ -1,0 +1,45 @@
+<%- include('partials/header') %>
+<div class="app-container">
+  <%- include('partials/sidebar') %>
+  <main class="main-feed dashboard-page">
+    <div class="dashboard-hero glass-panel glow-purple">
+      <h1>Analytics Dashboard</h1>
+      <p>Track your growth, engagement, and top-performing content</p>
+    </div>
+
+    <section class="dashboard-grid">
+      <div class="stat-card glass-panel"><span class="stat-card-label">Followers</span><span class="stat-card-value"><%= stats.followers %></span></div>
+      <div class="stat-card glass-panel"><span class="stat-card-label">Following</span><span class="stat-card-value"><%= stats.following %></span></div>
+      <div class="stat-card glass-panel"><span class="stat-card-label">Profile Views</span><span class="stat-card-value"><%= stats.profileViews %></span></div>
+      <div class="stat-card glass-panel"><span class="stat-card-label">Engagement Rate</span><span class="stat-card-value"><%= stats.engagementRate %>%</span></div>
+      <div class="stat-card glass-panel"><span class="stat-card-label">Total Posts</span><span class="stat-card-value"><%= stats.totalPosts %></span></div>
+      <div class="stat-card glass-panel"><span class="stat-card-label">Total Likes</span><span class="stat-card-value"><%= stats.totalLikes %></span></div>
+      <div class="stat-card glass-panel"><span class="stat-card-label">Total Comments</span><span class="stat-card-value"><%= stats.totalComments %></span></div>
+      <div class="stat-card glass-panel"><span class="stat-card-label">Total Views</span><span class="stat-card-value"><%= stats.totalViews %></span></div>
+    </section>
+
+    <section class="dashboard-charts">
+      <div class="chart-card glass-panel"><h3>Likes Growth</h3><canvas id="likesChart"></canvas></div>
+      <div class="chart-card glass-panel"><h3>Followers Growth</h3><canvas id="followersChart"></canvas></div>
+      <div class="chart-card glass-panel"><h3>Engagement Trend</h3><canvas id="engagementChart"></canvas></div>
+      <div class="chart-card glass-panel"><h3>Post Performance</h3><canvas id="performanceChart"></canvas></div>
+    </section>
+
+    <section class="top-posts-section glass-panel">
+      <h3>Top Performing Posts</h3>
+      <div class="top-posts-grid">
+        <div class="top-post-card"><h4>Most Liked</h4><p><%= topPosts.topLiked ? (topPosts.topLiked.content || 'Image post').slice(0,80) : 'No posts yet' %></p></div>
+        <div class="top-post-card"><h4>Most Commented</h4><p><%= topPosts.topCommented ? (topPosts.topCommented.content || 'Image post').slice(0,80) : 'No posts yet' %></p></div>
+        <div class="top-post-card"><h4>Most Viewed</h4><p><%= topPosts.topViewed ? (topPosts.topViewed.content || 'Image post').slice(0,80) : 'No posts yet' %></p></div>
+      </div>
+    </section>
+  </main>
+  <%- include('partials/right-sidebar') %>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+  window.dashboardData = <%- JSON.stringify(charts) %>;
+</script>
+<script src="/js/dashboard.js"></script>
+<%- include('partials/footer') %>

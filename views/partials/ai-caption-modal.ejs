@@ -1,0 +1,53 @@
+<div id="ai-caption-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-card glass-panel glow-cyan ai-caption-card">
+    <div class="ai-caption-header">
+      <h3>✨ AI Caption Generator</h3>
+      <button type="button" id="close-ai-modal" class="draggable-close-btn">×</button>
+    </div>
+    <div class="ai-caption-form">
+      <div class="form-group">
+        <label>Topic *</label>
+        <input type="text" id="ai-topic" class="form-control" placeholder="e.g. Node.js Project">
+      </div>
+      <div class="form-group">
+        <label>Keywords</label>
+        <input type="text" id="ai-keywords" class="form-control" placeholder="Express.js, MongoDB, Backend">
+      </div>
+      <div class="form-group">
+        <label>Mood</label>
+        <select id="ai-mood" class="form-control">
+          <option value="creative">Creative</option>
+          <option value="professional">Professional</option>
+          <option value="funny">Funny</option>
+          <option value="inspiring">Inspiring</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Image Description (optional)</label>
+        <input type="text" id="ai-image-desc" class="form-control" placeholder="Screenshot of code editor...">
+      </div>
+      <button type="button" id="ai-generate-btn" class="btn-primary" style="width:100%;padding:12px;">
+        <span id="ai-generate-label">Generate Captions</span>
+      </button>
+    </div>
+    <div id="ai-results" class="ai-results" style="display:none;">
+      <div class="ai-result-block">
+        <div class="ai-result-header"><span>Creative</span><button type="button" class="ai-copy-btn" data-target="ai-creative">Copy</button><button type="button" class="ai-insert-btn" data-target="ai-creative">Insert</button></div>
+        <p id="ai-creative"></p>
+      </div>
+      <div class="ai-result-block">
+        <div class="ai-result-header"><span>Professional</span><button type="button" class="ai-copy-btn" data-target="ai-professional">Copy</button><button type="button" class="ai-insert-btn" data-target="ai-professional">Insert</button></div>
+        <p id="ai-professional"></p>
+      </div>
+      <div class="ai-result-block">
+        <div class="ai-result-header"><span>Short</span><button type="button" class="ai-copy-btn" data-target="ai-short">Copy</button><button type="button" class="ai-insert-btn" data-target="ai-short">Insert</button></div>
+        <p id="ai-short"></p>
+      </div>
+      <div class="ai-result-block">
+        <div class="ai-result-header"><span>Hashtags</span><button type="button" class="ai-copy-btn" data-target="ai-hashtags">Copy</button><button type="button" class="ai-insert-btn" data-target="ai-hashtags">Insert</button></div>
+        <p id="ai-hashtags"></p>
+      </div>
+      <button type="button" id="ai-regenerate-btn" class="btn-primary" style="width:100%;margin-top:10px;">Regenerate</button>
+    </div>
+  </div>
+</div>

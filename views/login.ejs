@@ -1,0 +1,58 @@
+<%- include('partials/header') %>
+
+<main class="auth-wrapper">
+  
+  <div class="auth-card glass-panel glow-purple">
+    
+    <div class="auth-header">
+      <!-- Icon -->
+      <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 54px; height: 54px; margin: 0 auto;">
+        <rect width="32" height="32" rx="8" fill="url(#authLogoGrad)" />
+        <circle cx="16" cy="16" r="6" fill="white" />
+        <path d="M16 4C9.37258 4 4 9.37258 4 16C4 22.6274 9.37258 28 16 28" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+        <defs>
+          <linearGradient id="authLogoGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#bd00ff" />
+            <stop offset="1" stop-color="#00f0ff" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <h2>Welcome Back</h2>
+      <p>Enter your credentials to access MiniConnect</p>
+    </div>
+
+    <% if (error) { %>
+      <div class="error-alert"><%= error %></div>
+    <% } %>
+
+    <form action="/auth/login" method="POST" class="auth-form">
+      
+      <div class="form-group">
+        <label for="username">USERNAME</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Type your username..." required autocomplete="username">
+      </div>
+
+      <div class="form-group">
+        <label for="password">PASSWORD</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Type your password..." required autocomplete="current-password">
+      </div>
+
+      <button type="submit" class="btn-primary" style="margin-top: 10px; padding: 14px; font-size: 1rem;">
+        <span>Login to Universe</span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      </button>
+
+    </form>
+
+    <div class="auth-footer">
+      <span>Don't have an account?</span>
+      <a href="/auth/register">Create one here</a>
+    </div>
+
+  </div>
+
+</main>
+
+<%- include('partials/footer') %>

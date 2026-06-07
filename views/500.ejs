@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : '500 - Internal Server Error - MiniConnect' %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body style="display: flex; justify-content: center; align-items: center; min-height: 100vh;">
+
+  <div class="auth-card glass-panel glow-purple" style="text-align: center; max-width: 460px; padding: 40px; display: flex; flex-direction: column; gap: 20px;">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="64" height="64" style="color: var(--neon-purple); filter: drop-shadow(0 0 8px var(--neon-purple)); margin: 0 auto;">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    </svg>
+
+    <h1 style="font-size: 3rem; font-weight: 800; background: linear-gradient(45deg, var(--neon-purple), var(--neon-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">500</h1>
+    
+    <h3 style="font-weight: 700;">Universe Disruption</h3>
+    
+    <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5;">An unexpected distortion was detected in our servers. The cosmos is currently being refactored by our cybernetic engineers. Please retry shortly.</p>
+
+    <a href="/" class="btn-primary" style="margin-top: 15px; text-decoration: none; padding: 12px 24px;">
+      <span>Reload Safe Sector</span>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H18.5" />
+      </svg>
+    </a>
+
+  </div>
+
+</body>
+</html>

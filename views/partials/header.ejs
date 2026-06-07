@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'MiniConnect - A Premium Social Platform' %></title>
+  <!-- Main Glassmorphic Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Dynamic 3D Neon Background Blobs -->
+  <div class="bg-blobs-container">
+    <div class="bg-blob blob-purple"></div>
+    <div class="bg-blob blob-cyan"></div>
+    <div class="bg-blob blob-pink"></div>
+    <div class="bg-blob blob-blue"></div>
+  </div>
+
+  <!-- Floating Toast Notifications Center -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Top Glassmorphic Navigation Header -->
+  <header class="top-navbar">
+    <a href="/" class="logo-container">
+      <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="28" height="28" rx="8" fill="url(#logoGrad)" />
+        <circle cx="16" cy="16" r="6" fill="white" />
+        <path d="M16 4C9.37258 4 4 9.37258 4 16C4 22.6274 9.37258 28 16 28" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+        <defs>
+          <linearGradient id="logoGrad" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#bd00ff" />
+            <stop offset="1" stop-color="#00f0ff" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <span>MiniConnect</span>
+    </a>
+
+    <div class="nav-actions">
+      <!-- Dark/Light Theme Button Toggle -->
+      <button id="theme-toggle" class="action-btn" style="padding: 10px; border-radius: 50%; width: 42px; height: 42px; display: flex; justify-content: center; align-items: center;" title="Toggle Theme">
+        <!-- SVG icon injected in main.js based on theme state -->
+      </button>
+
+      <% if (user) { %>
+        <!-- Floating notification panel trigger -->
+        <button onclick="document.getElementById('draggable-panel').style.display = 'flex'; loadNotificationDropdown();" class="action-btn" style="padding: 10px; border-radius: 50%; width: 42px; height: 42px; display: flex; justify-content: center; align-items: center; position: relative;" title="Alerts Center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="22" height="22">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+          </svg>
+          <span id="header-notif-badge" class="header-notif-badge" style="<%= typeof unreadNotifications !== 'undefined' && unreadNotifications > 0 ? '' : 'display:none' %>"><%= typeof unreadNotifications !== 'undefined' && unreadNotifications > 0 ? (unreadNotifications > 9 ? '9+' : unreadNotifications) : '0' %></span>
+        </button>
+
+        <a href="/users/<%= user.username %>" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
+          <img src="<%= user.profilePicture %>" alt="<%= user.username %>" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--neon-cyan); box-shadow: var(--neon-cyan-shadow);">
+          <span style="font-weight: 600; font-size: 0.9rem; color: var(--text-primary);" class="desktop-only"><%= user.username %></span>
+        </a>
+      <% } else { %>
+        <a href="/auth/login" class="btn-primary" style="padding: 8px 18px; font-size: 0.85rem; text-decoration: none;">Login</a>
+      <% } %>
+    </div>
+  </header>

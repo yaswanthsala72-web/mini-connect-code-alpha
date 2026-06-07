@@ -1,0 +1,139 @@
+<%- include('partials/header') %>
+
+<div class="app-container">
+  
+  <!-- Left Column: Navigation Sidebar -->
+  <%- include('partials/sidebar') %>
+
+  <!-- Middle Column: Interactive Main Feed -->
+  <main class="main-feed">
+    
+    <!-- Premium Instagram-Inspired Stories Reel -->
+    <div class="stories-container glass-panel">
+      
+      <!-- User's own mock story creation node -->
+      <div class="story-circle" 
+           data-username="<%= currentUser.username %>" 
+           data-avatar="<%= currentUser.profilePicture %>" 
+           data-story-image="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80" 
+           data-story-caption="Designing the ultimate glassmorphic web apps in 2026! 🚀💻">
+        <div class="story-ring" style="background: linear-gradient(45deg, var(--neon-cyan), var(--neon-green)); padding: 2px;">
+          <img src="<%= currentUser.profilePicture %>" alt="my story">
+        </div>
+        <span>My Story</span>
+      </div>
+
+      <!-- Mock Story 1 -->
+      <div class="story-circle" 
+           data-username="alex_cosmos" 
+           data-avatar="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" 
+           data-story-image="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&auto=format&fit=crop&q=80" 
+           data-story-caption="Hiking through Yosemite under the golden sunrise... Nature is real art! ☀️🏔️">
+        <div class="story-ring">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="alex_cosmos">
+        </div>
+        <span>alex_cosmos</span>
+      </div>
+
+      <!-- Mock Story 2 -->
+      <div class="story-circle" 
+           data-username="elena_pixels" 
+           data-avatar="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80" 
+           data-story-image="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&auto=format&fit=crop&q=80" 
+           data-story-caption="Just finished painting a brand new neon canvas concept. Vaporwave vibes! 🎨🌸">
+        <div class="story-ring">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80" alt="elena_pixels">
+        </div>
+        <span>elena_pixels</span>
+      </div>
+
+      <!-- Mock Story 3 -->
+      <div class="story-circle" 
+           data-username="neon_coder" 
+           data-avatar="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" 
+           data-story-image="https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&auto=format&fit=crop&q=80" 
+           data-story-caption="Refactoring standard database connections inside Node.js. Speed boosted! ☕🔥">
+        <div class="story-ring">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" alt="neon_coder">
+        </div>
+        <span>neon_coder</span>
+      </div>
+
+      <!-- Mock Story 4 -->
+      <div class="story-circle" 
+           data-username="synth_clara" 
+           data-avatar="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80" 
+           data-story-image="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&auto=format&fit=crop&q=80" 
+           data-story-caption="Backstage sound check for tonight's retro wave concert! 🎹🔊">
+        <div class="story-ring">
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80" alt="synth_clara">
+        </div>
+        <span>synth_clara</span>
+      </div>
+
+    </div>
+
+    <!-- Quick Post Composer -->
+    <div class="composer-card glass-panel glow-cyan">
+      <form action="/posts/create" method="POST" enctype="multipart/form-data">
+        <div class="composer-header">
+          <img class="composer-avatar" src="<%= currentUser.profilePicture %>" alt="avatar">
+          <div class="composer-input-wrapper">
+            <textarea name="content" class="composer-textarea" placeholder="What's happening in your digital universe? Share a thought..." required></textarea>
+          </div>
+        </div>
+        
+        <div class="composer-actions">
+          <div class="composer-buttons">
+            <button type="button" class="action-btn ai-caption-trigger" title="AI Caption Generator">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="18" height="18">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              <span>AI Caption</span>
+            </button>
+            <label class="action-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>Image</span>
+              <input type="file" name="image" class="file-input" onchange="this.nextElementSibling.textContent = this.files[0].name; this.nextElementSibling.style.color = 'var(--neon-green)'">
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400;">No file...</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn-primary" style="padding: 8px 18px; font-size: 0.85rem;">
+            <span>Share Post</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="16" height="16">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Active Posts Feed Container -->
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+      
+      <% if (posts.length === 0) { %>
+        <div class="glass-panel" style="padding: 40px; text-align: center;">
+          <h3 style="font-weight: 700; margin-bottom: 10px;">The Feed is Empty!</h3>
+          <p style="color: var(--text-secondary); font-size: 0.9rem;">Be the very first one to publish a thought to the universe.</p>
+        </div>
+      <% } %>
+
+      <% posts.forEach(post => { %>
+        <%- include('partials/post-card', { post, currentUser, savedPostIds }) %>
+      <% }) %>
+
+    </div>
+
+  </main>
+
+  <!-- Right Column: Sidebar Search & Widgets -->
+  <%- include('partials/right-sidebar') %>
+
+</div>
+
+<%- include('partials/ai-caption-modal') %>
+<script src="/js/caption-ai.js"></script>
+<%- include('partials/footer') %>
